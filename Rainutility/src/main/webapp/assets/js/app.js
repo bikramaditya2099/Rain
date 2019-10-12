@@ -11,7 +11,7 @@ angular.module('app', [
     'ui.utils',
     'oc.lazyLoad'
 ])
-.constant('domain','http://localhost:8080/Rainutility/rain/app/')
+.constant('domain','http://ec2-34-222-133-66.us-west-2.compute.amazonaws.com:8080/Rainutility/rain/app/')
 .constant('getUserInfo','getUserInfo')
 .constant('logout','logout')
 .constant('login','login')
