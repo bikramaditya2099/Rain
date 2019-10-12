@@ -8,7 +8,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
-import javax.ws.rs.HeaderParam;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
@@ -19,6 +18,7 @@ import com.rain.bean.AllUserResponse;
 import com.rain.bean.LoginBean;
 import com.rain.bean.LoginResponseBean;
 import com.rain.bean.RegisterUserBean;
+import com.rain.bean.ResponseBean;
 import com.rain.bean.UserResponseBean;
 import com.rain.utils.CreateLoginHeaders;
 import com.rain.utils.LoginFormatter;
@@ -104,12 +104,23 @@ public class LoginController {
 	@POST
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Object registerUser(@Context HttpServletRequest request,RegisterUserBean bean,@HeaderParam("appId") String appId)
+	public Object registerUser(@Context HttpServletRequest request,RegisterUserBean bean)
 	{
-		String url=properties.getProperty("rainsrv").concat(properties.getProperty("registerUser"));
-		Map<String, String> map=new HashMap<String, String>();
-				map.put("appId",appId);
-		AllUserResponse response=RainHttpClient.doPost(url, bean,map, AllUserResponse.class);
-		return response;
+		String subscriptionUrl=properties.getProperty("rainsrv").concat(properties.getProperty("subscribe"));
+		String registerUrl=properties.getProperty("rainsrv").concat(properties.getProperty("registerApp"));
+		
+		ResponseBean subscriptionResponse=RainHttpClient.doPost(subscriptionUrl, bean,null, ResponseBean.class);
+		if(subscriptionResponse.getCode()==2000) {
+			Map<String, String> map=new HashMap<String, String>();
+			map.put("payId",(String) subscriptionResponse.getValue());
+			bean.setUserEmail(bean.getEmail());
+			bean.setOwner(bean.getFirstName());
+			ResponseBean registrationResponse=RainHttpClient.doPost(registerUrl, bean,map, ResponseBean.class);
+			return registrationResponse;
+		}
+		
+//		Map<String, String> map=new HashMap<String, String>();
+//		map.put("appId",appId);
+		return subscriptionResponse;
 	}
 }

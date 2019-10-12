@@ -9,7 +9,7 @@ angular.module('app')
         // App globals
         $scope.app = {
             name: 'Rain',
-            description: 'Admin Dashboard UI kit',
+            description: 'RAIN Dashboard UI kit',
             layout: {
                 menuPin: false,
                 menuBehind: false,

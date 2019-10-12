@@ -3,9 +3,17 @@ package com.rain.bean;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
-
+//{ dob: "16-10-2019", appName: "sdfgh", mobile: 12345, fname: "sdfg", lname: "asdxfc", username: "asdfg@gmail.com", password: "asdfghb" }
 @XmlAccessorType(XmlAccessType.FIELD)
 public class RegisterUserBean {
+
+	@XmlElement(name="appName")
+private String appName;
+	@XmlElement(name="mobile")
+private String mobile;
+	@XmlElement(name="owner")
+private String owner;
+
 	@XmlElement(name="userEmail")
 private String userEmail;
 	@XmlElement(name="password")
@@ -20,6 +28,41 @@ private String dob;
 private String phone;
 	@XmlElement(name="gender")
 private String gender;
+	@XmlElement(name="email")
+private String email;
+	@XmlElement(name="subscriptionType")
+	private String subscriptionType;
+	
+public String getSubscriptionType() {
+		return subscriptionType;
+	}
+	public void setSubscriptionType(String subscriptionType) {
+		this.subscriptionType = subscriptionType;
+	}
+public String getAppName() {
+		return appName;
+	}
+	public void setAppName(String appName) {
+		this.appName = appName;
+	}
+	public String getMobile() {
+		return mobile;
+	}
+	public void setMobile(String mobile) {
+		this.mobile = mobile;
+	}
+	public String getOwner() {
+		return owner;
+	}
+	public void setOwner(String owner) {
+		this.owner = owner;
+	}
+	public String getEmail() {
+		return email;
+	}
+	public void setEmail(String email) {
+		this.email = email;
+	}
 public String getUserEmail() {
 	return userEmail;
 }

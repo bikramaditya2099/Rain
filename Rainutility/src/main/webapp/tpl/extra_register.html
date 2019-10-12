@@ -1,4 +1,4 @@
-<div class="register-container full-height sm-p-t-30">
+<div class="register-container full-height sm-p-t-30" ng-controller="rainloginController">
     <div class="container-sm-height full-height">
         <div class="row row-sm-height">
             <div class="col-sm-12 col-sm-height col-middle">
@@ -18,31 +18,49 @@
                             </div>
                             <label class="error" for="appid" ng-show="register.appid.$invalid && !register.appid.$pristine">This field is required.</label> -->
                             
-                            <div pg-form-group="" class="form-group form-group-default"  ng-class="{ 'has-error': register.subid.$invalid && !register.subid.$pristine }">
+                            <div pg-form-group="" class="form-group form-group-default" >
                        					 <label>Subscription Type</label>
-                       					  <select name="gender" ng-model="user.subid" class="cs-select cs-skin-slide form-control" cs-select>
-                       							 <option value="1">Demo</option>
-                       							 <option value="2">Basic</option>
-                       							 <option value="3">Standard</option>
-                       							 <option value="4">Pro</option>
-                       							 <option value="5">Unlimited</option>
+                       					  <select name="gender" ng-model="user.subscriptionType" ng-minlength="2" class="cs-select cs-skin-slide form-control" cs-select>
+                       					  <option value="">Select</option>
+                       							 <option value=1>Demo</option>
+                       							 <option value=2>Basic</option>
+                       							 <option value=3>Standard</option>
+                       							 <option value=4>Pro</option>
+                       							 <option value=5>Unlimited</option>
                   						  </select>
                     				</div>
-                             <label class="error" for="subid" ng-show="register.subid.$invalid && !register.subid.$pristine">This field is required.</label>
+                             <label class="error" for="subid" ng-show="subiderror">This field is required.</label>
+                            
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <div pg-form-group class="form-group form-group-default" ng-class="{ 'has-error': register.appName.$invalid && !register.appName.$pristine }">
+                                <label>App Name</label>
+                                <input type="text" name="appName" placeholder="App Name" class="form-control" ng-model="user.appName" required>
+                            </div>
+                            <label class="error" for="appName" ng-show="register.appName.$invalid && !register.appName.$pristine">This field is required.</label>
+                        </div>
+                        <div class="col-sm-6">
+                            <div pg-form-group class="form-group form-group-default" ng-class="{ 'has-error': register.mobile.$invalid && !register.mobile.$pristine }">
+                                <label>Mobile Number</label>
+                                <input type="number" name="mobile" placeholder="Mobile" class="form-control" ng-model="user.phone" required>
+                            </div>
+                            <label class="error" for="mobile" ng-show="register.mobile.$invalid && !register.mobile.$pristine">This field is required.</label>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-sm-6">
                             <div pg-form-group class="form-group form-group-default" ng-class="{ 'has-error': register.fname.$invalid && !register.fname.$pristine }">
                                 <label>First Name</label>
-                                <input type="text" name="fname" placeholder="Bikram" class="form-control" ng-model="user.fname" required>
+                                <input type="text" name="fname" placeholder="Bikram" class="form-control" ng-model="user.firstName" required>
                             </div>
-                            <label class="error" for="fname" ng-show="register.fname.$invalid && !register.fname.$pristine">This field is required.</label>
+                            <label class="error" for="fname" ng-show="register.firstName.$invalid && !register.fname.$pristine">This field is required.</label>
                         </div>
                         <div class="col-sm-6">
                             <div pg-form-group class="form-group form-group-default" ng-class="{ 'has-error': register.lname.$invalid && !register.lname.$pristine }">
                                 <label>Last Name</label>
-                                <input type="text" name="lname" placeholder="Aditya" class="form-control" ng-model="user.lname" required>
+                                <input type="text" name="lname" placeholder="Aditya" class="form-control" ng-model="user.lastName" required>
                             </div>
                             <label class="error" for="lname" ng-show="register.lname.$invalid && !register.lname.$pristine">This field is required.</label>
                         </div>
@@ -51,7 +69,7 @@
                         <div class="col-sm-12">
                             <div pg-form-group class="form-group form-group-default" ng-class="{ 'has-error': register.uname.$invalid && !register.uname.$pristine }">
                                 <label>Email</label>
-                                <input type="email" name="uname" placeholder="your email id (This will be your rain user id) " class="form-control" ng-model="user.username" required>
+                                <input type="email" name="uname" placeholder="your email id (This will be your rain user id) " class="form-control" ng-model="user.email" required>
                             </div>
                             <label class="error" for="uname" ng-show="register.uname.$invalid && !register.uname.$pristine">Enter a valid email.</label>
                         </div>
@@ -81,11 +99,12 @@
                     				<div pg-form-group="" class="form-group form-group-default"  ng-class="{ 'has-error': register.gender.$invalid && !register.gender.$pristine }">
                        					 <label>Gender</label>
                        					  <select name="gender" ng-model="user.gender" class="cs-select cs-skin-slide form-control" cs-select>
+                       							 <option value="">Select</option>
                        							 <option value="male">Male</option>
                        							 <option value="female">Female</option>
                   						  </select>
                     				</div>
-                             <label class="error" for="gender" ng-show="register.gender.$invalid && !register.gender.$pristine">This field is required.</label>
+                             <label class="error" for="gender" ng-show="gendererror">This field is required.</label>
                       </div>
                     </div>
                     <div class="row m-t-10">
@@ -96,7 +115,7 @@
                             <a href="" data-target="#helpModal" data-toggle="modal" class="text-info small">Help? Contact Support</a>
                         </div>
                     </div>
-                    <button class="btn btn-primary btn-cons m-t-10" type="submit" ng-disabled="register.$invalid">Create a new account</button>
+                    <button class="btn btn-primary btn-cons m-t-10" type="submit" ng-disabled="register.$invalid" ng-click="registerUser()">Create a new account</button>
                     
                 </form>
             </div>

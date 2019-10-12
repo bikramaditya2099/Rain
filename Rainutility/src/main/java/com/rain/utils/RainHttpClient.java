@@ -62,9 +62,10 @@ public class RainHttpClient {
 			WebResource.Builder builder = webResource
 					.accept(MediaType.APPLICATION_JSON);
 			builder.type(MediaType.APPLICATION_JSON);
-
+			if(headers!=null) {
 			for (Map.Entry<String, String> entry : headers.entrySet()) {
 				builder.header(entry.getKey(), entry.getValue());
+			}
 			}
 
 			T output = builder.post(type, input);

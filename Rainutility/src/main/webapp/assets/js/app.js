@@ -16,11 +16,14 @@ angular.module('app', [
 .constant('logout','logout')
 .constant('login','login')
 .constant('getAllUsers','getAllUsers')
- .service('urls',function(domain,getUserInfo,logout,login,getAllUsers){ 
+.constant('getAllUsers','getAllUsers')
+.constant('registerUser','registerUser')
+ .service('urls',function(domain,getUserInfo,logout,login,getAllUsers,registerUser){ 
 	 this.getUserInfo = domain+getUserInfo;
 	 this.logout = domain+logout;
 	 this.login=domain+login;
 	 this.getAllUsers=domain+getAllUsers;
+	 this.registerUser=domain+registerUser;
  })
 ;
  
